@@ -1,0 +1,6 @@
+Adaptive RAG is a retrieval augmented generation system that changes its retrieval strategy based on query complexity.
+
+Simple questions can use fewer retrieved chunks and shorter responses.
+Complex questions can use deeper retrieval, orchestration, and optional self-correction.
+
+In this project, FastAPI exposes the backend API, LangGraph coordinates the workflow, and Streamlit provides the user interface.
