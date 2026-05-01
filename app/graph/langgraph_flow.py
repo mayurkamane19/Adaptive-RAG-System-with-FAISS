@@ -1,7 +1,7 @@
 from typing import TypedDict
 
 from app.rag.adaptive_router import classify_query
-from app.rag.generator import generate_answer
+from app.rag.generator_v2 import generate_answer, generator_backend
 from app.rag.retriever import retrieve_documents, vector_store_backend
 
 
@@ -15,6 +15,7 @@ class RAGState(TypedDict):
     needs_rewrite: bool
     attempts: int
     vector_backend: str
+    llm_backend: str
 
 
 def route_question(state: RAGState) -> RAGState:
@@ -23,6 +24,7 @@ def route_question(state: RAGState) -> RAGState:
     state["attempts"] = 0
     state["needs_rewrite"] = False
     state["vector_backend"] = vector_store_backend()
+    state["llm_backend"] = generator_backend()
     return state
 
 
@@ -75,6 +77,7 @@ def _run_without_langgraph(question: str) -> RAGState:
         "needs_rewrite": False,
         "attempts": 0,
         "vector_backend": vector_store_backend(),
+        "llm_backend": generator_backend(),
     }
     state = route_question(state)
     state = retrieve_context(state)
@@ -134,6 +137,7 @@ def run_adaptive_rag(question: str) -> dict:
                 "needs_rewrite": False,
                 "attempts": 0,
                 "vector_backend": vector_store_backend(),
+                "llm_backend": generator_backend(),
             }
         )
 
@@ -145,4 +149,5 @@ def run_adaptive_rag(question: str) -> dict:
         "rewritten_question": state["rewritten_question"],
         "self_correction_attempts": state["attempts"],
         "vector_backend": state.get("vector_backend", vector_store_backend()),
+        "llm_backend": state.get("llm_backend", generator_backend()),
     }

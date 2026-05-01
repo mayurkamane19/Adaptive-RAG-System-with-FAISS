@@ -1,5 +1,24 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Environment variables
 .env
-*.log
+
+# Data (RAG files, PDFs, embeddings)
+data/
+
+# Virtual environment
+venv/
+.env/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+node_modules/
+frontend/node_modules/

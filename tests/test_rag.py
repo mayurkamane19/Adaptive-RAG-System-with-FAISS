@@ -20,3 +20,4 @@ def test_rag_response_shape():
     assert "rewritten_question" in result
     assert "self_correction_attempts" in result
     assert "vector_backend" in result
+    assert "llm_backend" in result
